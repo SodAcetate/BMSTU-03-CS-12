@@ -1,0 +1,36 @@
+@page
+@using Lab_12.Domain.Models;
+@model Lab_12.Pages.HotelModel;
+
+<!DOCTYPE html>
+<body>
+<div align="left">
+
+    <form action="Cities" method="get">
+        <button class="btn btn-default">Cities list</button></form>
+    <br>
+    <b>@Model.HotelValue.Name</b><br>
+    <a href="City?id=@Model.CityId">@Model.CityName</a><br>
+    Id: @Model.Id<br>
+    CityId: @Model.CityId<br>
+    Address: @Model.HotelValue.Address<br>
+    @Model.HotelValue.PricePerNight USD per night<br>
+    <br>
+    <b>Edit hotel:</b>
+    <form action="Hotel?Handler=Edit" method="post">
+        <input type="hidden" name="HotelValue.Id" value="@Model.HotelValue.Id">
+        <input type="hidden" name="HotelValue.CityId" value="@Model.HotelValue.CityId">
+        <input type="text" name="HotelValue.Name" value="@Model.HotelValue.Name"><br>
+        <input type="text" name="HotelValue.Address" value="@Model.HotelValue.Address"><br>
+        <input name="HotelValue.PricePerNight" value="@Model.HotelValue.PricePerNight"> USD per night<br>
+        <button class="btn btn-default">Update hotel</button>
+    </form>
+    <br>
+    <form action="Hotel?Handler=Delete" method="post">
+        <input type="hidden" name="Id" value="@Model.Id">
+        <button class="btn btn-default">Delete hotel</button>
+    </form>
+
+
+</div>
+</body>

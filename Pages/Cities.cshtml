@@ -1,0 +1,30 @@
+@page
+@using Lab_12.Domain.Models;
+@model Lab_12.Pages.CitiesModel
+@{
+    ViewData["Title"] = "Home page";
+}
+ 
+<div align="left">
+    <form action="Index" method="get"><button>Back to safety</button></form>
+    <h1>Cities</h1>
+    <table>
+        <tr><th>Name</th><th>TimeZone</th><th>Hotels</th><th>Sights</th></tr>
+        @foreach(City city in Model.CityList)
+        {
+            <tr>
+                <td><a href="City?id=@city.Id">@city.Name</a></td>
+                <td>GMT+@city.TimeZone</td>
+                <td>@city.Hotels.ToArray().Length Hotels</td>
+                <td>@city.Sights.ToArray().Length Sights</td>
+            </tr>
+        }
+    </table>
+    <br>
+    <b>Add City:</b>
+    <form action="Cities?Handler=AddCity" method="post">
+                    <label>Name</label><input type="text" name="NewCity.Name"><br>
+                    <label>TimeZone</label><input type="number" max="23" min="0" name="NewCity.TimeZone"><br>
+                    <button>Create new City</button>
+    </form>
+</div>

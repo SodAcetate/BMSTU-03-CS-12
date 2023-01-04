@@ -1,0 +1,36 @@
+@page
+@using Lab_12.Domain.Models;
+@model Lab_12.Pages.SightModel;
+
+<!DOCTYPE html>
+<body>
+<div align="left">
+
+    <form action="Cities" method="get">
+        <button class="btn btn-default">Cities list</button></form>
+    <br>
+    <b>@Model.SightValue.Name</b><br>
+    <a href="City?id=@Model.CityId">@Model.CityName</a><br>
+    Id: @Model.Id<br>
+    CityId: @Model.CityId<br>
+    Location: @Model.SightValue.Location<br>
+    @Model.SightValue.PricePerVisit USD per visit<br>
+    <br>
+    <b>Edit sight:</b>
+    <form action="Sight?Handler=Edit" method="post">
+        <input type="hidden" name="SightValue.Id" value="@Model.SightValue.Id">
+        <input type="hidden" name="SightValue.CityId" value="@Model.SightValue.CityId">
+        <input type="text" name="SightValue.Name" value="@Model.SightValue.Name"><br>
+        <input type="text" name="SightValue.Location" value="@Model.SightValue.Location"><br>
+        <input name="SightValue.PricePerVisit" value="@Model.SightValue.PricePerVisit"> USD per visit<br>
+        <button class="btn btn-default">Update Sight</button>
+    </form>
+    <br>
+    <form action="Sight?Handler=Delete" method="post">
+        <input type="hidden" name="Id" value="@Model.Id">
+        <button class="btn btn-default">Delete sight</button>
+    </form>
+
+
+</div>
+</body>

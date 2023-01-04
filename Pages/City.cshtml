@@ -1,0 +1,96 @@
+@page
+@using Lab_12.Domain.Models;
+@model Lab_12.Pages.CityModel;
+
+<!DOCTYPE html>
+<body>
+<div align="left">
+
+    <form action="Cities" method="get"><button class="btn btn-default">Cities list</button></form>
+
+     <form action="City?Handler=View" method="post">
+        <label>Goto id </label>
+        <input type="number" name="CityId" value="@Model.CityId" />
+        <input type="submit" value="Go"/>
+    </form>
+    
+    <table border="1">
+        <tr>
+            <td><b>City</b></td>
+            <td><b>Hotels</b></td>
+            <td><b>Sights</b></td>
+        </tr>
+        <tr>
+            <td>
+                @if(Model.CityValue.Name!=null && Model.CityValue.Name.Length>0)
+                {
+                    <div>
+                        <b>@Model.CityValue.Name</b><br>
+                        Id: @Model.CityId<br>
+                        GMT+@Model.CityValue.TimeZone<br>
+                        @Model.CityValue.Hotels.ToArray().Length Hotels<br>
+                        @Model.CityValue.Sights.ToArray().Length Sights
+                    </div>
+                }
+                else
+                {
+                    <h3>No city selected</h3>
+                }
+            </td>
+            <td>
+                @foreach (Hotel hotel in Model.CityValue.Hotels)
+                {
+                    <div>
+                    <a href="Hotel?id=@hotel.Id"><b>@hotel.Name</b></a><br>
+                    @hotel.Address<br>
+                    @hotel.PricePerNight USD per night<br>
+                    </div>
+                }
+            </td>
+            <td>
+                @foreach (Sight sight in Model.CityValue.Sights)
+                {
+                    <div>
+                    <a href="Sight?id=@sight.Id"><b>@sight.Name</b></a><br>
+                    @sight.Location<br>
+                    @sight.PricePerVisit USD per visit<br>
+                    </div>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form action="City?Handler=Edit" method="post">
+                    <input type="hidden" name="CityId" value="@Model.CityId">
+                    <b><input type="text" name="Name" value="@Model.Name"></b><br>
+                    <label>GMT+</label><input type="number" max="23" min="0" name="TimeZone" value="@Model.TimeZone"><br>
+                    <button class="btn btn-default">Update</button>
+                </form>
+            </td>
+            <td>
+                <form action="City?Handler=AddHotel" method="post">
+                    <input type="hidden" name="CityId" value="@Model.CityId">
+                    Name: <input size="15" type="text" name="NewHotel.Name"><br>
+                    Address: <input type="text" name="NewHotel.Address"><br>
+                    Cost per night: <input size="10" name="NewHotel.PricePerNight"><br>
+                    <button>Add hotel</button>
+                </form>
+            </td>
+            <td>
+                <form action="City?Handler=AddSight" method="post">
+                    <input type="hidden" name="CityId" value="@Model.CityId">
+                    Name: <input size="15" type="text" name="NewSight.Name"><br>
+                    Location: <input type="text" name="NewSight.Location"><br>
+                    Cost per visit: <input size="10" name="NewSight.PricePerVisit"><br>
+                    <button>Add sight</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <form action="City?Handler=Delete" method="post">
+        <input type="hidden" name="CityId" value="@Model.CityId">
+        <button class="btn btn-default">Delete this City</button>
+    </form>
+</div>
+</body>
